@@ -1,0 +1,143 @@
+{
+	"name": "pl_csv_to_parquet",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_CSV_to_Parquet",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "License Issue Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "license_issue_date",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "License Number",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "license_number",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Animal's Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "animal_name",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Species",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "species",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Primary Breed",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "primary_breed",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Secondary Breed",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "secondary_breed",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "ZIP Code",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "zip_code",
+									"physicalType": "UTF8"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_pet_csv",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_pet_parquet",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

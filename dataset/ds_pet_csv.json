@@ -1,0 +1,53 @@
+{
+	"name": "ds_pet_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_storage_Seattle",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Seattle_Pet_Licenses_20251015.csv",
+				"folderPath": "raw",
+				"container": "seattlestagedata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "License Issue Date",
+				"type": "String"
+			},
+			{
+				"name": "License Number",
+				"type": "String"
+			},
+			{
+				"name": "Animal's Name",
+				"type": "String"
+			},
+			{
+				"name": "Species",
+				"type": "String"
+			},
+			{
+				"name": "Primary Breed",
+				"type": "String"
+			},
+			{
+				"name": "Secondary Breed",
+				"type": "String"
+			},
+			{
+				"name": "ZIP Code",
+				"type": "String"
+			}
+		]
+	}
+}
