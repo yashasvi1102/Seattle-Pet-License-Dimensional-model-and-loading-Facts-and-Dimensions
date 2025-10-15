@@ -1,0 +1,20 @@
+{
+	"name": "ds_pet_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_storage_Seattle",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "parquet",
+				"container": "seattlestagedata"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
