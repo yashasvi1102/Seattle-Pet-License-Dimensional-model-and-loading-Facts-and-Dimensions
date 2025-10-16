@@ -17,8 +17,14 @@
 		"type": "SnowflakeV2Table",
 		"schema": [],
 		"typeProperties": {
-			"schema": "STAGE",
-			"table": " STG_LOCATION"
+			"schema": {
+				"value": "@dataset().scehma_name",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
 		}
 	}
 }
