@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Parquet2_snowstg",
+				"name": "snowflake",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -19,7 +19,7 @@
 						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
+							"fileListPath": "seattlestagedata/parquet/Seattle_Pet_Licenses_20251015.parquet",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -27,21 +27,16 @@
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "ParquetWriteSettings"
+						"type": "SnowflakeV2Sink",
+						"importSettings": {
+							"type": "SnowflakeImportCopyCommand"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "ls_storage_Seattle",
+							"type": "LinkedServiceReference"
 						}
 					}
 				},
@@ -53,8 +48,12 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_pet_parquet",
-						"type": "DatasetReference"
+						"referenceName": "SnowflakeTable1",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "STAGE",
+							"table_name": "STG_PET_LICENSE"
+						}
 					}
 				]
 			}
