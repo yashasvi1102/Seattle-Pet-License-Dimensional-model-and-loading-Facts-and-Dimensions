@@ -1,0 +1,21 @@
+{
+	"name": "Parquet3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_storage_Seattle",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "geo-data.parquet",
+				"folderPath": "parquet",
+				"container": "seattlestagedata"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
