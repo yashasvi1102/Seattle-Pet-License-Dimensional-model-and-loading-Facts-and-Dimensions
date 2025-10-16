@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "snowflake",
+				"name": "snowflake_parquet",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -19,7 +19,9 @@
 						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"fileListPath": "seattlestagedata/parquet/Seattle_Pet_Licenses_20251015.parquet",
+							"recursive": true,
+							"wildcardFolderPath": "parquet/",
+							"wildcardFileName": "*.parquet",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -35,9 +37,10 @@
 					"enableStaging": true,
 					"stagingSettings": {
 						"linkedServiceName": {
-							"referenceName": "ls_storage_Seattle",
+							"referenceName": "AzureBlobStorage_sas",
 							"type": "LinkedServiceReference"
-						}
+						},
+						"path": "seattlestagedata"
 					}
 				},
 				"inputs": [
