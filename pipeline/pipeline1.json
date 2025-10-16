@@ -21,7 +21,7 @@
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": "parquet/",
-							"wildcardFileName": "*.parquet",
+							"wildcardFileName": "Seattle_Pet_Licenses_20251015.parquet",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -41,6 +41,81 @@
 							"type": "LinkedServiceReference"
 						},
 						"path": "seattlestagedata"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "license_issue_date",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LICENSE_ISSUE_DATE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "license_number",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LICENSE_NUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "animal_name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ANIMALS_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "species",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SPECIES",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "primary_breed",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PRIMARY_BREED",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "secondary_breed",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECONDARY_BREED",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "zip_code",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ZIP_CODE",
+									"type": "String"
+								}
+							}
+						]
 					}
 				},
 				"inputs": [
@@ -56,6 +131,64 @@
 						"parameters": {
 							"schema_name": "STAGE",
 							"table_name": "STG_PET_LICENSE"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": "parquet/",
+							"wildcardFileName": "geo-data.parquet",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SnowflakeV2Sink",
+						"importSettings": {
+							"type": "SnowflakeImportCopyCommand"
+						}
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage_sas",
+							"type": "LinkedServiceReference"
+						},
+						"path": "seattlestagedata/parquet"
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Parquet3",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SnowflakeTable2",
+						"type": "DatasetReference",
+						"parameters": {
+							"scehma_name": "STAGE",
+							"table_name": "STG_LOCATION"
 						}
 					}
 				]
